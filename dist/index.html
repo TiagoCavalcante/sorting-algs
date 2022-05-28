@@ -13,11 +13,69 @@
   overflow: hidden;
 }
 
+.grow {
+  flex: 1;
+}
+
+#quick-menu {
+  max-width: 90%;
+  width: 200px;
+  height: 50px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  padding: 5px;
+  display: flex;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+}
+
+#play-pause {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+#play-pause.play {
+  background-image: url("play.1d1b644e.png");
+}
+
+#play-pause.pause {
+  background-image: url("pause.0adc07cd.png");
+}
+
+#restart {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  background-image: url("restart.3150bd1d.png");
+  background-repeat: no-repeat;
+}
+
 </style>
 </head>
 
 <body>
 	<canvas id="canvas"></canvas>
+
+	<div id="quick-menu">
+		<span class="grow" id="restart"></span>
+
+		<span class="play" id="play-pause"></span>
+
+		<select class="grow" name="speed" id="speed">
+			<option selected="" value="1">1&times;</option>
+			<option value="10">10&times;</option>
+			<option value="100">100&times;</option>
+			<option value="1000">1000&times;</option>
+		</select>
+	</div>
+
 	<script src="/index.b71e74eb.js" defer=""></script>
 </body>
 

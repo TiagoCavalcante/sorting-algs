@@ -142,7 +142,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"lSXiB":[function(require,module,exports) {
+})({"17ZdQ":[function(require,module,exports) {
 "use strict";
 var global = arguments[3];
 var HMR_HOST = null;
@@ -521,23 +521,56 @@ const getBarConfig = (length)=>{
 const clearUse = (array)=>{
     for (const element of array)element.inUse = false;
 };
+const start = ()=>{
+    interval = setInterval(()=>{
+        clearUse(list);
+        for(let i = 0; i < Math.floor(speed / 10) + 1; i++)sort.iterate();
+        (0, _draw.drawBarConfig)(list);
+        if (sort.done) {
+            clearInterval(interval);
+            interval = 0;
+            setTimeout(()=>{
+                // Ensure that all bars are black before stop drawing.
+                clearUse(list);
+                (0, _draw.drawBarConfig)(list);
+            }, getTime());
+        }
+        interval;
+    }, getTime());
+};
 let speed = 1;
-const list = getBarConfig(10);
-const sort = _sort["bubbleSort"](list);
+const speedOption = document.getElementById("speed");
+speedOption.addEventListener("change", (e)=>{
+    speed = Number.parseInt(e.target.value);
+});
+let list = getBarConfig(100);
+let sort = _sort["selectionSort"](list);
+// So the screen isn't white.
+(0, _draw.drawBarConfig)(list);
+const restartButton = document.getElementById("restart");
+restartButton.addEventListener("click", ()=>{
+    list = getBarConfig(100);
+    sort = _sort["selectionSort"](list);
+    // It is paused, draw the new configuration.
+    if (interval === -1) (0, _draw.drawBarConfig)(list);
+    // The sorting is over, starts again.
+    if (interval === 0) start();
+});
 const getTime = ()=>1000 / speed / list.length;
-const interval = setInterval(()=>{
-    clearUse(list);
-    for(let i = 0; i < Math.floor(speed / 10) + 1; i++)sort.iterate();
-    (0, _draw.drawBarConfig)(list);
-    if (sort.done) {
+// -1 means paused.
+// 0 means the sorting is finished.
+let interval = -1;
+const playPauseButton = document.getElementById("play-pause");
+playPauseButton.addEventListener("click", ()=>{
+    if (playPauseButton.className === "play") {
+        playPauseButton.className = "pause";
+        start();
+    } else {
+        playPauseButton.className = "play";
         clearInterval(interval);
-        setTimeout(()=>{
-            // Ensure that all bars are black before stop drawing.
-            clearUse(list);
-            (0, _draw.drawBarConfig)(list);
-        }, getTime());
+        interval = -1;
     }
-}, getTime());
+});
 
 },{"./draw":"1K9j7","./lists":"9T5jE","./sort":"2fNvN"}],"1K9j7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -563,7 +596,7 @@ const drawBarConfig = (config)=>{
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"ltnhE"}],"ltnhE":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -620,7 +653,7 @@ const shuffle = (array)=>{
     return array;
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"ltnhE"}],"2fNvN":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2fNvN":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "bubbleSort", ()=>bubbleSort);
@@ -676,6 +709,6 @@ const selectionSort = (array)=>{
     };
 };
 
-},{"./lists":"9T5jE","@parcel/transformer-js/src/esmodule-helpers.js":"ltnhE"}]},["lSXiB","h7u1C"], "h7u1C", "parcelRequire94c2")
+},{"./lists":"9T5jE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["17ZdQ","h7u1C"], "h7u1C", "parcelRequirec7d1")
 
 //# sourceMappingURL=index.b71e74eb.js.map

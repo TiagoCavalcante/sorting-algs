@@ -22,29 +22,70 @@ const clearUse = (array: ArrayElement[]) => {
 	}
 };
 
+const start = () => {
+	interval = setInterval(() => {
+		clearUse(list);
+
+		for (let i = 0; i < Math.floor(speed / 10) + 1; i++) {
+			sort.iterate();
+		}
+
+		drawBarConfig(list);
+
+		if (sort.done) {
+			clearInterval(interval);
+			interval = 0;
+
+			setTimeout(() => {
+				// Ensure that all bars are black before stop drawing.
+				clearUse(list);
+				drawBarConfig(list);
+			}, getTime());
+		} interval;
+	}, getTime());
+};
+
 let speed = 1;
 
-const list = getBarConfig(10);
-const sort = sorts["bubbleSort"](list);
+const speedOption = document.getElementById("speed")!;
+speedOption.addEventListener("change", (e) => {
+	speed = Number.parseInt((e.target as any).value);
+});
+
+let list = getBarConfig(100);
+let sort = sorts["selectionSort"](list);
+
+// So the screen isn't white.
+drawBarConfig(list);
+
+const restartButton = document.getElementById("restart")!;
+restartButton.addEventListener("click", () => {
+	list = getBarConfig(100);
+	sort = sorts["selectionSort"](list);
+
+	// It is paused, draw the new configuration.
+	if (interval === -1) drawBarConfig(list);
+
+	// The sorting is over, starts again.
+	if (interval === 0) start();
+});
 
 const getTime = () => (1000 / speed) / list.length;
 
-const interval = setInterval(() => {
-	clearUse(list);
+// -1 means paused.
+// 0 means the sorting is finished.
+let interval = -1;
 
-	for (let i = 0; i < Math.floor(speed / 10) + 1; i++) {
-		sort.iterate();
-	}
+const playPauseButton = document.getElementById("play-pause")!;
+playPauseButton.addEventListener("click", () => {
+	if (playPauseButton.className === "play") {
+		playPauseButton.className = "pause";
 
-	drawBarConfig(list);
-	
-	if (sort.done) {
+		start();
+	} else {
+		playPauseButton.className = "play";
+
 		clearInterval(interval);
-
-		setTimeout(() => {
-			// Ensure that all bars are black before stop drawing.
-			clearUse(list);
-			drawBarConfig(list);
-		}, getTime())
+		interval = -1;
 	}
-}, getTime());
+});
