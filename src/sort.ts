@@ -1,5 +1,5 @@
-import { ArrayElement } from './types';
-import { swap } from './lists';
+import { ArrayElement } from "./types";
+import { swap } from "./lists";
 
 type SortFunction<T> = (array: T[]) => {
 	// Whether the sorting is over.

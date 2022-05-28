@@ -1,0 +1,25 @@
+{
+  "name": "sorting-algs",
+  "version": "0.0.1",
+  "description": "Visualization tool for multiple sorting algorithms",
+  "main": "index.js",
+  "scripts": {
+    "build": "parcel build src/index.html",
+    "start": "parcel --open src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TiagoCavalcante/sorting-algs.git"
+  },
+  "keywords": [
+    "visualization",
+    "sorting",
+    "canvas2d"
+  ],
+  "author": "Tiago Cavalcante <tiagotrindade111@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TiagoCavalcante/sorting-algs/issues"
+  },
+  "homepage": "https://github.com/TiagoCavalcante/sorting-algs#readme"
+}

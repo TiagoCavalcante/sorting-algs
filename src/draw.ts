@@ -1,4 +1,4 @@
-import { ArrayElement } from './types';
+import { ArrayElement } from "./types";
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const context = canvas.getContext("2d")!;

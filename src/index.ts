@@ -1,6 +1,6 @@
-import { ArrayElement } from './types';
-import { bubbleSort } from './sort';
-import { drawBarConfig } from './draw';
+import * as sorts from "./sort";
+import { ArrayElement } from "./types";
+import { drawBarConfig } from "./draw";
 import { shuffle } from "./lists";
 
 const getBarConfig = (length: number) => {
@@ -22,15 +22,29 @@ const clearUse = (array: ArrayElement[]) => {
 	}
 };
 
-const list = getBarConfig(50);
-const sort = bubbleSort(list);
+let speed = 1;
 
-const speed = 1000;
+const list = getBarConfig(10);
+const sort = sorts["bubbleSort"](list);
+
+const getTime = () => (1000 / speed) / list.length;
 
 const interval = setInterval(() => {
 	clearUse(list);
-	sort.iterate();
-	drawBarConfig(list);
 
-	if (sort.done) clearInterval(interval);
-}, speed / list.length);
+	for (let i = 0; i < Math.floor(speed / 10) + 1; i++) {
+		sort.iterate();
+	}
+
+	drawBarConfig(list);
+	
+	if (sort.done) {
+		clearInterval(interval);
+
+		setTimeout(() => {
+			// Ensure that all bars are black before stop drawing.
+			clearUse(list);
+			drawBarConfig(list);
+		}, getTime())
+	}
+}, getTime());

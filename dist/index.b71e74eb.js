@@ -521,15 +521,23 @@ const getBarConfig = (length)=>{
 const clearUse = (array)=>{
     for (const element of array)element.inUse = false;
 };
-const list = getBarConfig(50);
-const sort = (0, _sort.bubbleSort)(list);
-const speed = 1000;
+let speed = 1;
+const list = getBarConfig(10);
+const sort = _sort["bubbleSort"](list);
+const getTime = ()=>1000 / speed / list.length;
 const interval = setInterval(()=>{
     clearUse(list);
-    sort.iterate();
+    for(let i = 0; i < Math.floor(speed / 10) + 1; i++)sort.iterate();
     (0, _draw.drawBarConfig)(list);
-    if (sort.done) clearInterval(interval);
-}, speed / list.length);
+    if (sort.done) {
+        clearInterval(interval);
+        setTimeout(()=>{
+            // Ensure that all bars are black before stop drawing.
+            clearUse(list);
+            (0, _draw.drawBarConfig)(list);
+        }, getTime());
+    }
+}, getTime());
 
 },{"./draw":"1K9j7","./lists":"9T5jE","./sort":"2fNvN"}],"1K9j7":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
