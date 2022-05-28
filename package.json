@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/TiagoCavalcante/sorting-algs/issues"
   },
-  "homepage": "https://github.com/TiagoCavalcante/sorting-algs#readme"
+  "homepage": "https://github.com/TiagoCavalcante/sorting-algs#readme",
+  "dependencies": {
+    "parcel": "^2.6.0"
+  }
 }
